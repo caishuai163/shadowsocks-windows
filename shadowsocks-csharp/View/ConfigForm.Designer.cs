@@ -69,6 +69,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.DuplicateButton = new System.Windows.Forms.Button();
+            this.AutoButton = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.ServerGroupBox.SuspendLayout();
@@ -608,6 +609,7 @@
             this.tableLayoutPanel4.Controls.Add(this.DuplicateButton, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.DeleteButton, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.AddButton, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.AutoButton, 1, 1);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 330);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
@@ -629,6 +631,17 @@
             this.DuplicateButton.Text = "Dupli&cate";
             this.DuplicateButton.UseVisualStyleBackColor = true;
             this.DuplicateButton.Click += new System.EventHandler(this.DuplicateButton_Click);
+            // 
+            // AutoButton
+            // 
+            this.AutoButton.Location = new System.Drawing.Point(86, 38);
+            this.AutoButton.Margin = new System.Windows.Forms.Padding(3, 6, 0, 3);
+            this.AutoButton.Name = "AutoButton";
+            this.AutoButton.Size = new System.Drawing.Size(80, 23);
+            this.AutoButton.TabIndex = 15;
+            this.AutoButton.Text = "F5 Server";
+            this.AutoButton.UseVisualStyleBackColor = true;
+            this.AutoButton.Click += new System.EventHandler(this.AutoButton_Click);
             // 
             // ConfigForm
             // 
@@ -710,6 +723,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox PortableModeCheckBox;
         private System.Windows.Forms.CheckBox NeedPluginArgCheckBox;
+        private System.Windows.Forms.Button AutoButton;
     }
 }
 

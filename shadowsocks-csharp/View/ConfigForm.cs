@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 using Shadowsocks.Controller;
 using Shadowsocks.Model;
 using Shadowsocks.Properties;
@@ -61,6 +64,7 @@ namespace Shadowsocks.View
             ApplyButton.Text = I18N.GetString("Apply");
             MoveUpButton.Text = I18N.GetString("Move &Up");
             MoveDownButton.Text = I18N.GetString("Move D&own");
+            AutoButton.Text = I18N.GetString("Auto Refresh Server List");
             Text = I18N.GetString("Edit Servers");
         }
 
@@ -565,6 +569,44 @@ namespace Shadowsocks.View
         private void UsePluginArgCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             ShowHidePluginArgInput(NeedPluginArgCheckBox.Checked);
+        }
+
+        private void AutoButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var client = new HttpClient()
+                {
+                    Timeout = TimeSpan.FromSeconds(5)
+                };
+                var res = client.GetAsync("https://raw.githubusercontent.com/caishuai163/tips/master/ss/conf.json").Result;
+                if (!res.IsSuccessStatusCode)
+                {
+                    return;
+                }
+                var data = res.Content.ReadAsStringAsync().Result;
+                Dictionary<string, string> json = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
+                Server s = new Server()
+                {
+                    server = json["ip"],
+                    server_port = int.Parse(json["port"]),
+                    password = json["pwd"],
+                    method = json["method"]
+
+                };
+                var isExist=_modifiedConfiguration.configs.Exists(f => f.server.Equals(s.server) && f.server_port == s.server_port);
+                if (!isExist) {
+                    Configuration.AddDefaultServerOrServer(_modifiedConfiguration, s);
+                    LoadServerNameListToUI(_modifiedConfiguration);
+                    UpdateIndexToEnd();
+                }
+                
+            }
+            catch (Exception ex){
+                Console.WriteLine("我的日志："+ex.ToString());
+            }
+           
+            
         }
     }
 }
